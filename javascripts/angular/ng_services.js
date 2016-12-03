@@ -45,7 +45,7 @@ angular.module('myApp.services', [])
 	function retrieveJson(arg) {
 		return $http({
 			method: 'GET',
-			url: 'http://' + arg
+			url: 'https://' + arg
 		}).then(function successCallback(response) {
 			return response.data;
 		}); 
