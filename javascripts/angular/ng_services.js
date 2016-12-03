@@ -93,7 +93,6 @@ angular.module('myApp.services', [])
 
 	function modifyJson (data) {
 
-		(data[0]).party=functions.modifyString((data[0]).party, "Cumann", "C");
 
 		for (var i = 0; i < data.length; i++) {
 
@@ -109,6 +108,8 @@ angular.module('myApp.services', [])
 			(data[i])["age_elected_dail"] = functions.timeInYears(dail_elect_date, birth_date);
 			(data[i])["age_leave_dail"] = functions.timeInYears(dail_leave_date, birth_date);
 			(data[i])["age"] = age;
+
+			(data[i]).party=functions.modifyString((data[i]).party, "Cumann", "C");
 
 		}
 

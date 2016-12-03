@@ -18,6 +18,7 @@ angular.module('myApp.controllers', ['ngSanitize'
 			vm.templateTitle = constants.TEMPLATE_ONE_TITLE; 
 			functions.retrieveJson('dowapi.tomgdow.com/taoisigh').then(function(data) {
 				vm.taoisigh  = dowapi.modifyJson(data);
+        console.log(data)
 			});
 		}                         
 ])
