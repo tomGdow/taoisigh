@@ -1,0 +1,51 @@
+<table>
+	<tr>
+		<th></th>
+		<th></th>
+		<th></th>
+		<th colspan="4">Taoiseach</th>
+		<th colspan="4">Teachta Dail (TD)</th>
+		<th colspan="3">Personal</th>
+	</tr>
+	<tr>
+		<th></th>
+		<th></th>
+		<th></th>
+		<th colspan="2">Period</th>
+		<th colspan="2">Age</th>
+		<th colspan="2">Period</th>
+		<th colspan="2">Age</th>
+		<th>Born</th>
+		<th>Died</th>
+		<th>Age</th>
+	</tr>
+	<tr>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td>Begin</td>
+		<td>End</td>
+		<td>Begin</td>
+		<td>End</td>
+		<td>Begin</td>
+		<td>End</td>
+		<td>Begin</td>
+		<td>End</td>
+	</tr>
+	<tr ng-repeat="t in collection | orderBy: 'taoiseach_number' ">
+		<td>{{ t.taoiseach_number }}</td>
+		<td>{{ t.name }}</td>
+		<td>{{ t.party }}</td>
+		<td>{{ t.taoiseach_start | dabbbleDate:'yyyy' }}</td>
+		<td>{{ t.taoiseach_finish | dabbbleDate:'yyyy' }}</td>
+		<td>{{ t.age_elected_taoiseach}}</td>
+		<td>{{ t.age_end_taoiseach}}</td>
+		<td>{{ t.dail_elected | dabbbleDate:'yyyy' }}</td>
+		<td>{{ t.dail_leave | dabbbleDate:'yyyy' }}</td>
+		<td>{{ t.age_elected_dail}}</td>
+		<td>{{ t.age_leave_dail}}</td>
+		<td>{{ t.date_of_birth | dabbbleDate:'yyyy' }}</td>
+		<td>{{ t.date_of_death | dabbbleDate:'yyyy' }}</td>
+		<td>{{ t.age}}</td>
+	</tr>
+</table>

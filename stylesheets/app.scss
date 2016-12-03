@@ -70,50 +70,21 @@ div {
 	}
 }
 
-.flash {
-	color: $app-blue;
-}
-
-.field_with_errors {
-	padding: 2px;
-	background-color: red;
-	display: table;
-}
-
-#error_explanation {
-	width: 450px;
-	border: 2px solid red;
-	padding: 7px;
-	padding-bottom: 0;
-	margin-bottom: 20px;
-	background-color: #f0f0f0;
-
-	h2 {
-		text-align: left;
-		font-weight: bold;
-		padding: 5px 5px 5px 15px;
-		font-size: 12px;
-		margin: -7px;
-		margin-bottom: 0;
-		background-color: #c00;
-		color: #fff;
-	}
-
-	ul li {
-		font-size: 12px;
-		list-style: square;
-	}
-}
-
 label {
 	display: block;
 }
 
 .template {
 	margin: 20px;
-	border: 1px solid grey;
+	//	border: 1px solid grey;
 	background-color: #F6F6F6;
-	h1,	h2, h3 {margin-left: 20px;}
+	h1,	h2, h3 {
+		margin-left: 20px;
+		padding-top: 20px;
+	}
+
+  p.padBottom {padding-bottom: 20px}
+
 	a {
 		color: #000;
 
@@ -140,8 +111,4 @@ label {
 	form { margin-left: 20px;}
 } 
 
-.mydivclass {
-	font-size: 30px;
-	color: blue;
-}
 

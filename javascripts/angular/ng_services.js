@@ -4,132 +4,119 @@ angular.module('myApp.services', [])
 .value('version', '0.1')
 .constant('constants', {
 
-  APP_TITLE: 'Angular with Rails 5',
-  APP_OWNER: 'Tom Doe',
-  TEMPLATE_ONE_TITLE: 'Template 1',
-  TEMPLATE_TWO_TITLE: 'Template 2',
-  TEMPLATE_THREE_TITLE: 'Template 3',
-  TEMPLATE_FOUR_TITLE: 'Template 4',
-  TEMPLATE_FIVE_TITLE: 'Template 5',
-  TEMPLATE_SIX_TITLE: 'Template 6',
-  APP_DESCRIPTION: 'A Single Page Application with Ruby on Rails and Angular',
-  APP_VERSION: '1.0'
+	APP_TITLE: 'Irish Taoisigh',
+	APP_OWNER: 'Tom Doe',
+	TEMPLATE_ONE_TITLE: 'Irish Taoisigh',
+	TEMPLATE_TWO_TITLE: 'Fianna Fail Taoisigh',
+	TEMPLATE_THREE_TITLE: 'Fine Gael Taoisigh',
+	APP_DESCRIPTION: 'An AngularJS Single Page Application',
+	APP_VERSION: '1.0'
 
 })
-.factory('functions', function () {
+.factory('functions', ['$http', function ($http) {
 
-  function makeLastName (string) {
-    var mystring = string.split(' ');
-    if (mystring.length > 1) {
-      return mystring[1];
-    }
-    return string;
-  };
+	function activeNav (location){
+		//make navbar active tab correspond with url hash
+		function activeHelper(arg) {
+			return arg.test(location);
+		};
 
-  function makeFirstName (string) {
-    var mystring = string.split(' ');
-    if (mystring.length > 1) {
-      return mystring[0];
-    }
-    return string;
-  };
+		var data = {
+			"nav1" : {"url": "view1", "class": "home"},
+			"nav2" : {"url": "view2", "class": "viewtwo"},
+			"nav3" : {"url": "view3", "class": "viewthree"},
+		}; 
 
-  function greeting (string) {
-    return "Greetings from " +  string;
-  };
+		switch (true) {
+			case activeHelper(RegExp(data.nav1.url)):
+				return  data.nav1.class;
+				break;
+			case activeHelper(RegExp(data.nav2.url)):
+				return data.nav2.class;
+				break;
+			case activeHelper(RegExp(data.nav3.url)):
+				return data.nav3.class;
+				break;
+			default:
+				return data.nav1.class;
+		}
+	}
 
-  function activeNav (location){
-    //make navbar active tab correspond with url hash
-    function activeHelper(arg) {
-      return arg.test(location);
-    };
+	function retrieveJson(arg) {
+		return $http({
+			method: 'GET',
+			url: 'http://' + arg
+		}).then(function successCallback(response) {
+			return response.data;
+		}); 
+	};
 
-    var data = {
-      "nav1" : {"url": "view1", "class": "home"},
-      "nav2" : {"url": "view2", "class": "viewtwo"},
-      "nav3" : {"url": "view3", "class": "viewthree"},
-      "nav4" : {"url": "view4", "class": "viewfour"},
-      "nav5" : {"url": "view5", "class": "viewfive"},
-      "nav6" : {"url": "view6", "class": "viewsix"},
-    }; 
+	function modifyString (str, replaceMe, replaceWith) {
+		return	str.replace(replaceMe, replaceWith);
+	}
 
-    switch (true) {
-      case activeHelper(RegExp(data.nav1.url)):
-        return  data.nav1.class;
-        break;
-      case activeHelper(RegExp(data.nav2.url)):
-        return data.nav2.class;
-        break;
-      case activeHelper(RegExp(data.nav3.url)):
-        return data.nav3.class;
-        break;
-      case activeHelper(RegExp(data.nav4.url)):
-        return  data.nav4.class;
-        break;
-      case activeHelper(RegExp(data.nav5.url)):
-        return  data.nav5.class;
-        break;
-      case activeHelper(RegExp(data.nav6.url)):
-        return  data.nav6.class;
-        break;
-      default:
-        return data.nav1.class;
-    }
-  }
-  return {
-    makeLastName: makeLastName,
-    makeFirstName: makeFirstName,
-    greeting: greeting,
-    activeNav: activeNav,
-  };
-})
-.factory('allIrelandData', function () {
-  return {
+	function fullDate(a) {
+		return new Date(Date.parse(a));
+	}
+	function calcAge(dob, rip) {
+		// requires fullDate()
+		var ageDate;
+		if (/^([-]{1,5})$/.test(rip)) {
+			ageDate = new Date(Date.now() - fullDate(dob));
+		} else {
+			ageDate = new Date(fullDate(rip) - fullDate(dob));
+		}
+		return ageDate.getUTCFullYear() - 1970;
+	}
 
-    "football": [
+	function timeInYears(begin, end) {
+		const millisecond_to_year = 1000*60*60*24*365;
+		var t = Math.floor((begin - end)/millisecond_to_year);
+		if (isNaN(t)) {
+			return '---';
+		} else {
+			return t;
+		}
+	}
 
-    {"winners": 36,"name": "Kerry"},
-    {"winners": 24,"name": "Dublin"},
-    {"winners": 9,"name": "Galway"},
-    {"winners": 7,"name": "Cork"},
-    {"winners": 7,"name": "Meath"},
-    {"winners": 5,"name": "Cavan"},
-    {"winners": 5,"name": "Wexford"},
-    {"winners": 5,"name": "Down"},
-    {"winners": 4,"name": "Kildare"},
-    {"winners": 4,"name": "Tipperary"},
-    {"winners": 3,"name": "Mayo"},
-    {"winners": 3,"name": "Offaly"},
-    {"winners": 3,"name": "Louth"},
-    {"winners": 3,"name": "Tyrone"},
-    {"winners": 8,"name": "Others"}
+	return {
+		activeNav: activeNav,
+		retrieveJson: retrieveJson,
+		modifyString: modifyString,
+		fullDate: fullDate,
+		calcAge: calcAge,
+		timeInYears: timeInYears,
+	};
 
-    ],
+}])
+.factory('dowapi', ['$http','functions',function($http, functions) {
 
-    "hurling": [
+	function modifyJson (data) {
 
-    {"winners": 34,"name": "Kilkenny"},
-    {"winners": 30,"name": "Cork"},
-    {"winners": 26,"name": "Tipperary"},
-    {"winners": 7,"name": "Limerick"},
-    {"winners": 6,"name": "Dublin"},
-    {"winners": 6,"name": "Wexford"},
-    {"winners": 4,"name": "Galway"},
-    {"winners": 4,"name": "Offaly"},
-    {"winners": 4,"name": "Clare"},
-    {"winners": 2,"name": "Waterford"},
-    {"winners": 3,"name": "Others"}
+		(data[0]).party=functions.modifyString((data[0]).party, "Cumann", "C");
 
-    ]
+		for (var i = 0; i < data.length; i++) {
 
-  };
+			var birth_date = functions.fullDate((data[i]).date_of_birth);
+			var taoiseach_begin_date  = functions.fullDate((data[i]).taoiseach_start);
+			var taoiseach_end_date  = functions.fullDate((data[i]).taoiseach_finish);
+			var dail_elect_date  = functions.fullDate((data[i]).dail_elected);
+			var dail_leave_date  = functions.fullDate((data[i]).dail_leave);
+			var age  = functions.calcAge((data[i]).date_of_birth, (data[i]).date_of_death);
 
-})
-.factory('exampleDates', function () {
-  return {
+			(data[i])["age_elected_taoiseach"] = functions.timeInYears(taoiseach_begin_date, birth_date);
+			(data[i])["age_end_taoiseach"] = functions.timeInYears(taoiseach_end_date, birth_date);
+			(data[i])["age_elected_dail"] = functions.timeInYears(dail_elect_date, birth_date);
+			(data[i])["age_leave_dail"] = functions.timeInYears(dail_leave_date, birth_date);
+			(data[i])["age"] = age;
 
-    "dateOne": "2016-09-23 20:22:34.993927",
-    "dateTwo": "2014-09-13 22:21:54.443225"
-  };
+		}
 
-})
+		return data;
+	}
+
+	return {
+		modifyJson: modifyJson
+	};
+
+}]);
