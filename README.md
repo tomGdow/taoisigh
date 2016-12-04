@@ -46,3 +46,6 @@ In other words, a Ruby-on-Rails API returns JSON data which is dynamically displ
 The error 'No Access-Control-Allow-Origin header is present on the requested resource' was 
 fixed by changing 'http' to 'https' in the function 'retrieveJson()'
 (/javascripts/angular/ng_services.js) in **the gh-pages branch** of the application
+
+    angular.version.full    # from browser console
+>"1.5.8"
